@@ -1,4 +1,5 @@
 # RNFileCache
+[![Build Status](https://api.travis-ci.com/mutagen-d/react-native-file-cache.svg?branch=master)](https://travis-ci.com/mutagen-d/react-native-file-cache)
 
 Caching files to disk in react-native apps
 

@@ -1,6 +1,6 @@
 {
-  "name": "react-native-file-cache",
-  "version": "0.1.0",
+  "name": "@mutagen-d/react-native-file-cache",
+  "version": "0.1.1",
   "description": "Caching files to disk in react-native apps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,7 +9,14 @@
     "build": "rimraf dist && tsc -p tsconfig.prod.json",
     "prepare": "npm run build"
   },
-  "keywords": [],
+  "keywords": [
+    "react-native",
+    "file",
+    "download",
+    "request",
+    "image",
+    "cache"
+  ],
   "author": "mutagen-d",
   "license": "ISC",
   "devDependencies": {
@@ -32,5 +39,13 @@
     "crypto-js": "^4.1.1",
     "js-logger": "^1.6.1",
     "p-queue": "6.6.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mutagen-d/react-native-file-cache.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mutagen-d/react-native-file-cache/issues"
+  },
+  "homepage": "https://github.com/mutagen-d/react-native-file-cache#readme"
 }

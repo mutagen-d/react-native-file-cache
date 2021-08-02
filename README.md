@@ -6,9 +6,9 @@ Caching files to disk in react-native apps
 ## Installation
 
 ```bash
-npm i react-native-file-cache
+npm i @mutagen-d/react-native-file-cache
 // or
-yarn add react-native-file-cache
+yarn add @mutagen-d/react-native-file-cache
 ```
 
 ## Usage

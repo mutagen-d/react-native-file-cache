@@ -1,9 +1,12 @@
 # RNFileCache
+
 [![Build Status](https://api.travis-ci.com/mutagen-d/react-native-file-cache.svg?branch=master)](https://travis-ci.com/mutagen-d/react-native-file-cache)
 
 Caching files to disk in react-native apps
 
 ## Installation
+
+This package depends on [`rn-fetch-blob`](https://github.com/joltup/rn-fetch-blob). First [install](https://github.com/joltup/rn-fetch-blob#user-content-installation) it.
 
 ```bash
 npm i @mutagen-d/react-native-file-cache

@@ -41,7 +41,7 @@ class FileResponse {
   private static getExtensionFromUrl(url: string) {
     const pathname = url.replace(/^(https?)?\:\/\/([^/#?]+)/, '').split(/[?#]/g)[0].split('/').pop()
     const names = pathname ? pathname.split('.') : []
-    return names.length > 1 ? names.pop() : ''
+    return names.length > 1 ? names.pop() as string : ''
   }
   
   getFile() {

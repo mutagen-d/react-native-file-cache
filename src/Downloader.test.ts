@@ -77,7 +77,8 @@ describe('Downloader', () => {
     const onError = jest.fn()
     const onCancel = jest.fn()
     const onLoad = jest.fn()
-    const req = Downloader.download({ url, path, onError, onCancel, onLoad })
+    const onLoadEnd = jest.fn()
+    const req = Downloader.download({ url, path, onError, onCancel, onLoad, onLoadEnd })
     await sleep(0)
     const request = Downloader.getActiveRequest(url)
     const stopped = await Promise.race([
@@ -90,5 +91,6 @@ describe('Downloader', () => {
     expect(onError).toHaveBeenCalledTimes(1)
     expect(onCancel).toHaveBeenCalledTimes(1)
     expect(onLoad).not.toHaveBeenCalled()
+    expect(onLoadEnd).toHaveBeenCalledTimes(1)
   })
 })

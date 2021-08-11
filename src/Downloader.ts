@@ -64,6 +64,9 @@ class Downloader {
     if (options?.onCancel) {
       request.on('cancel', options.onCancel)
     }
+    if (options?.onLoadEnd) {
+      request.on('loadend', options.onLoadEnd)
+    }
   }
 
   private static waitRequestToComplete(url: string) {

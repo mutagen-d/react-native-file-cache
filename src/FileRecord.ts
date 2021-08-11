@@ -20,7 +20,7 @@ class FileRecord {
     this.name = params.name
     this.ext = params.ext
     this.dir = params.dir
-    this.size = params.size || 0
+    this.size = params.size ? +params.size : 0
     this.lastModified = params.lastModified || 0
   }
   
@@ -42,7 +42,7 @@ class FileRecord {
     this.lastModified = lastModified
   }
   setSize(size: number) {
-    this.size = size
+    this.size = +size
   }
   setBaseName(name: string) {
     this.name = name

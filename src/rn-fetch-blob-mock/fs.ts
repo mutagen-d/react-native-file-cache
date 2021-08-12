@@ -1,5 +1,6 @@
 import { pad, random, sha1, sleep } from '../util'
 import FileSystem, { Directory, File, Item } from 'tree-file-system'
+import Path from '@mutagen-d/path'
 
 export type FSTimes = {
   min: number
@@ -88,6 +89,23 @@ export const createFS = (fs: FileSystem, _times?: { lstat: FSTimes; unlink: FSTi
       await sleep(random(times.lstat.min, times.lstat.max))
       const item = fs.getItem(path)
       return Boolean(item)
+    },
+    mv: async (path: string, dest: string) => {
+      await sleep(random(times.lstat.min, times.lstat.max))
+      const item = fs.getItem(path)
+      if (!item) {
+        throw new Error('file or directory not found, path = ' + path)
+      }
+      const destItem = fs.getItem(dest) || fs.createDirectory(dest)
+      if (destItem === item) {
+        throw new Error('paths must not be equal')
+      }
+      const parent = destItem.parent as Directory
+      const name = destItem.name
+      destItem.remove()
+      item.remove()
+      item.name = name
+      parent.appendOrReplaceItem(item)
     },
     dirs: {
       PictureDir: '/base/dir/' as const,

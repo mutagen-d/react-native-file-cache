@@ -159,5 +159,38 @@ describe('fs', () => {
       await exists('/base/sub/../dir', true)
       await exists('/base/./dir', true)
     })
+    test('mv - without errors', async () => {
+      const { FS, fs } = prepareFS()
+      const mv = async (path: string, dest: string) => {
+        await FS.mv(path, dest)
+        expect(fs.getItem(path)).toBeFalsy()
+        expect(fs.getItem(dest)).toBeTruthy()
+      }
+
+      await mv('/base/dir/text.out', '/base/dir/file_x.txt')
+      await mv('/base/home', '/base/dir/foo')
+      await mv('/base/dir/file_x.txt', '/base/text.txt')
+    })
+    test('mv - with errors', async () => {
+      const { FS, fs } = prepareFS()
+      const mv = async (path: string, dest: string) => {
+        try {
+          await FS.mv(path, dest)
+        } catch (e) {
+          expect(e instanceof Error).toBe(true)
+        }
+      }
+
+      const data = [
+        ['/base/dir/path/to/subdir', '/base/dir/subdir'],
+        ['/base/dir/', '/'],
+        ['/base/', '/base'],
+      ] as Array<[string, string]>
+      expect.assertions(data.length)
+
+      await data.reduce((promise, args) => {
+        return promise.then(() => mv(...args))
+      }, Promise.resolve())
+    })
   })
 })

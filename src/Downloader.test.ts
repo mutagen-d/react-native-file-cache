@@ -93,4 +93,35 @@ describe('Downloader', () => {
     expect(onLoad).not.toHaveBeenCalled()
     expect(onLoadEnd).toHaveBeenCalledTimes(1)
   })
+  test('stopDownload - with error', async () => {
+    const url = 'https://example.com'
+    const path = '/downloader/base/dir/file-001.html'
+    const onError = jest.fn()
+    const onCancel = jest.fn()
+    const onLoad = jest.fn()
+    const onLoadEnd = jest.fn()
+    const req = Downloader.download({ url, path, onError, onCancel, onLoad, onLoadEnd })
+    await sleep(0)
+    const request = Downloader.getActiveRequest(url)
+    expect(request.countAllListeners()).toBeGreaterThan(0)
+    request.stop = jest.fn(async () => {
+      try {
+        throw new Error('')
+      } finally {
+        request.removeAllListeners()
+      }
+    })
+    const stopped = await Promise.race([
+      req,
+      Downloader.stopDownload(url)
+    ])
+    expect(request.stop).toBeCalled()
+    expect(request.countAllListeners()).toEqual(0)
+    expect(stopped).not.toBe(true)
+    expect(fileSystem.getFile(path)).toBeFalsy()
+    expect(onError).not.toHaveBeenCalled()
+    expect(onCancel).not.toHaveBeenCalled()
+    expect(onLoad).not.toHaveBeenCalled()
+    expect(onLoadEnd).not.toHaveBeenCalled()
+  })
 })

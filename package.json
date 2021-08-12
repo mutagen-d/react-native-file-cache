@@ -1,6 +1,6 @@
 {
   "name": "@mutagen-d/react-native-file-cache",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Caching files to disk in react-native apps",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

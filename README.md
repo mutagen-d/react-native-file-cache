@@ -60,7 +60,7 @@ Logger.setLevel(Logger.DEBUG)
 | `totalSize`                               | `number`    | current size of cached files                                               |
 | [`load()`](#load)                         |             | loads files from cache                                                     |
 | [`exists()`](#exists)                     | `boolean`   | return if file exists in cache                                             |
-| [`getPath()`](#getpath)                   | `string`    | get file path, regardless of whether file exists or not                    |
+| [`getPath()`](#getpath)                   | `string`    | get file path, regardless of whether file exists or not \*                 |
 | [`download()`](#download)                 | `File`      | download file                                                              |
 | [`cancelDownload()`](#canceldownload)     |             | cancel active download, partially downlaoded file will be removed          |
 | `pruneCache()`                            |             | removes old files if cache size is reached `maxSize`                       |
@@ -73,6 +73,8 @@ Logger.setLevel(Logger.DEBUG)
 | `isRemoving()`                            | `boolean`   |                                                                            |
 | `onRemoved()`                             |             | set listener on file remove                                                |
 | `removeAll()`                             |             | removes all files from cache                                               |
+
+\* If file doesn't exist and url doesn't contain extension part, then `getPath(url)` returns filepath without file extension. If file exists, then `getPath(url)` returns filepath with file extension, even when url does not contain extension part
 
 ### load
 

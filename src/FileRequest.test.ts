@@ -1,6 +1,7 @@
 import { FSItem, populateFS, fileSystem } from './rn-fetch-blob-mock/fs'
 import FileRequest from './FileRequest'
 import { sleep } from './util'
+import Deffer from './Deffer'
 
 const items: FSItem[] = [{
   type: 'directory',
@@ -29,21 +30,27 @@ describe('FileRequest', () => {
     clearFS()
   })
   test('request and save file to path', async () => {
-    const path = '/file_request/base/dir/file-01.html'
-    expect(fileSystem.getFile(path)).toBeFalsy()
-    const onProgress = jest.fn()
-    const onLoad = jest.fn()
-    const fileRequest = new FileRequest({
-      url: 'https://example.com',
-      path,
-      onProgress,
-      onLoad,
-    })
-    await fileRequest.request()
-    expect(onProgress).toHaveBeenCalled()
-    expect(onLoad).toHaveBeenCalled()
-    const file = fileSystem.getFile(path)
-    expect(file).toBeTruthy()
+    const request = async (url: string, path: string, pathIsFixed: boolean) => {
+      expect(fileSystem.getFile(path)).toBeFalsy()
+      const onProgress = jest.fn()
+      const onLoad = jest.fn()
+      const fileRequest = new FileRequest({
+        url,
+        path,
+        onProgress,
+        onLoad,
+      })
+      const res = await fileRequest.request()
+      expect(onProgress).toHaveBeenCalled()
+      expect(onLoad).toHaveBeenCalled()
+      expect(res).toBeTruthy()
+      const file = fileSystem.getFile(res?.path as string)
+      expect(path !== res?.path).toBe(pathIsFixed)
+      expect(file).toBeTruthy()
+    }
+
+    await request('https://example.com', '/file_request/base/dir/file-01.html', false)
+    await request('https://example.com', '/file_request/base/dir/file-02', true)
   })
   test('request', async () => {
     const onLoadEnd = jest.fn()
